@@ -1,0 +1,10 @@
+curl --location --request POST 'https://polygonzkevm-mainnet.g.alchemy.com/v2/EuL5KyMLLBrMyNbZW9CgtiSy45_bh24c' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "getTokenSupply",
+    "params": [
+        "HfYFjMKNZygfMC8LsQ8LtpPsPxEJoXJx4M6tqi75Hajo"
+    ]
+}'
