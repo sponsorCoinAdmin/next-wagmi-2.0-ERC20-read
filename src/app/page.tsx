@@ -17,13 +17,13 @@ import { Contract,
   getWagmiTotalSupply,
   getContractErc20Records,
   formatDecimals,
-  formattedTotalSupply,
-  formattedBalanceOf
+  getFormattedTotalSupply,
+  getFormattedBalanceOf
 } from './wagmiERC20Read'
 
 function App() {
   const account = useAccount()
-  const [ ACTIVE_WALLET_ACCOUNT, setActiveWalletAccount ] = useState<Address>()
+  const [ ACTIVE_WALLET_ACCOUNT, setActiveWalletAccount ] = useState<Address>(`0x0000000000000000000000000000000000000000`)
   const { connectors, connect, status, error } = useConnect()
   const { disconnect } = useDisconnect()
   const [ contract, setContract ] = useState<Contract>()
@@ -40,7 +40,7 @@ function App() {
   
   useEffect(() => {
     // alert(`SETTING ACTIVE_WALLET_ACCOUNT = ${account.address}`)
-    if (ACTIVE_WALLET_ACCOUNT !== account.address)
+    if (account.address != undefined && ACTIVE_WALLET_ACCOUNT !== account.address)
       setActiveWalletAccount(account.address)
   }, [account.address]);
 
@@ -67,14 +67,14 @@ function App() {
     <>
       <div>
         <h2>Account</h2>
-        {/* <div>
+        <div>
           Blockchain Provider = {BLOCKCHAIN_PROVIDER} <br />
           Contract Data: {JSON.stringify(contract, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2)} <br />
           Connection Status: {account.status} <br />
           Wallet Account Addresses: {JSON.stringify(account.addresses, null, 2)} <br />
           Using Wallet Active Address: {JSON.stringify(account.address, null, 2)} <br />
           chainId: {account.chainId}
-        </div> */}
+        </div>
 
         {account.status === 'connected' && (
           <button type="button" onClick={() => disconnect()}>
@@ -94,16 +94,16 @@ function App() {
             {connector.name}
           </button>
         ))}
-        {/* <div>{status}</div>
+        <div>{status}</div>
         <div>{error?.message}</div>
         <div>Name                   : {getWagmiName(USDT_POLYGON_CONTRACT)}</div>
         <div>Symbol                 : {getWagmiSymbol(USDT_POLYGON_CONTRACT)}</div>
         <div>Decimals               : {getWagmiDecimals(USDT_POLYGON_CONTRACT)}</div>
         <div>Total Supply           : {getWagmiTotalSupply(USDT_POLYGON_CONTRACT)?.toString()}</div>
-        <div>Formatted Total Supply : {formattedTotalSupply(USDT_POLYGON_CONTRACT)}</div> */}
-        {/* <div>BalanceOf          : {getWagmiBalanceOf(account?.address, USDT_POLYGON_CONTRACT)?.toString()}</div> */}
-        {/* <div>Active Wallet Account : {ACTIVE_WALLET_ACCOUNT}</div> */}
-        <div>Formatted BalanceOf    : {formattedBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)}</div>
+        <div>BalanceOf              : {getWagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)}</div>
+        <div>Formatted BalanceOf    : {getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)}</div>
+        <div>Formatted Total Supply : {getFormattedTotalSupply(USDT_POLYGON_CONTRACT)}</div>
+        <div>Active Wallet Account : {ACTIVE_WALLET_ACCOUNT}</div>
         {/* <div>{`nameRec.status = ${nameRec.status}`}</div>
         <div>{`totalSupplyRec.status = ${totalSupplyRec.status}`}</div>
         <div>{nameRec.status === 'success' ? "Name : " + nameRec.data : null}</div>
