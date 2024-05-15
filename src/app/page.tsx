@@ -72,7 +72,7 @@ function App() {
           Contract Data: {JSON.stringify(contract, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2)} <br />
           Connection Status: {account.status} <br />
           Wallet Account Addresses: {JSON.stringify(account.addresses, null, 2)} <br />
-          Using Wallet Active Address: {JSON.stringify(account.address, null, 2)} <br />
+          Active Wallet Address: {JSON.stringify(account.address, null, 2)} <br />
           chainId: {account.chainId}
         </div>
 
@@ -100,10 +100,9 @@ function App() {
         <div>Symbol                 : {getWagmiSymbol(USDT_POLYGON_CONTRACT)}</div>
         <div>Decimals               : {getWagmiDecimals(USDT_POLYGON_CONTRACT)}</div>
         <div>Total Supply           : {getWagmiTotalSupply(USDT_POLYGON_CONTRACT)?.toString()}</div>
+        <div>Formatted Total Supply : {getFormattedTotalSupply(USDT_POLYGON_CONTRACT)}</div>
         <div>BalanceOf              : {getWagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)}</div>
         <div>Formatted BalanceOf    : {getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)}</div>
-        <div>Formatted Total Supply : {getFormattedTotalSupply(USDT_POLYGON_CONTRACT)}</div>
-        <div>Active Wallet Account : {ACTIVE_WALLET_ACCOUNT}</div>
         {/* <div>{`nameRec.status = ${nameRec.status}`}</div>
         <div>{`totalSupplyRec.status = ${totalSupplyRec.status}`}</div>
         <div>{nameRec.status === 'success' ? "Name : " + nameRec.data : null}</div>
