@@ -14,7 +14,7 @@ type ContractRecs = {
   totalSupplyRec:any
 }
 
-import { config } from '@/wagmi'
+import { config } from '@/lib/wagmi/config'
 import { Address, formatUnits, getAddress } from 'viem'
 import { useReadContract } from 'wagmi'
 import { erc20Abi } from 'viem' 
