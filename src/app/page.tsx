@@ -18,25 +18,35 @@ import { TokenContract,
   getERC20WagmiTotalSupply,
   formatDecimals,
   getFormattedTotalSupply,
-  getFormattedBalanceOf
+  getFormattedBalanceOf,
+  getErc20Contract
 } from '../lib/wagmi/wagmiERC20Read'
+
+
+// let ACTIVE_WALLET_ACCOUNT:Address|undefined;
+const USDT_POLYGON_CONTRACT:Address  = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'
+const CHKN_ETHEREUM_CONTRACT:Address = '0xD55210Bb6898C021a19de1F58d27b71f095921Ee'
+const NULL_CONTRACT                  = '0x0000000000000000000000000000000000000000';
 
 function App() {
   const account = useAccount()
-  const [ ACTIVE_WALLET_ACCOUNT, setActiveWalletAccount ] = useState<Address>(`0x0000000000000000000000000000000000000000`)
+  const [ ACTIVE_WALLET_ACCOUNT, setActiveWalletAccount ] = useState<Address>(NULL_CONTRACT)
+  const [ DEFAULT_TOKEN_CONTRACT, setDefaultTokenContract ] = useState<Address>(NULL_CONTRACT)
   const { connectors, connect, status, error } = useConnect()
   const { disconnect } = useDisconnect()
   const [ contract, setContract ] = useState<TokenContract>()
 
   let balanceOfRec;
  
-  // let ACTIVE_WALLET_ACCOUNT:Address|undefined;
-  const USDT_POLYGON_CONTRACT:Address = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'
-  const CHKN_ETHEREUM_CONTRACT:Address = '0xD55210Bb6898C021a19de1F58d27b71f095921Ee'
-
   useEffect(() => {
-    if (account?.chainId !== undefined )
-        setNetworkTestContract(account.chainId)
+    if (account?.chainId !== undefined ) {
+      setNetworkTestContract(account.chainId)
+      switch(account.chainId) {
+        case 1: setDefaultTokenContract(CHKN_ETHEREUM_CONTRACT); break;
+        case 137: setDefaultTokenContract(USDT_POLYGON_CONTRACT); break;
+        default: setDefaultTokenContract(NULL_CONTRACT); break;
+      }
+    }
   }, [account.chainId]);
   
   useEffect(() => {
@@ -48,33 +58,18 @@ function App() {
   const setNetworkTestContract = (chainId:number | undefined) => {
     console.debug(`account.chainId Changed to ${account.chainId}`);
     if (account?.chainId !== undefined) {
-      switch(chainId) {
-        case 1:
-          setContract({chainId: chainId, 
-              name:"Chikencoin", 
-              symbol: "CHKN", 
-              address: CHKN_ETHEREUM_CONTRACT,
-              totalSupply: "0",
-              decimals: 18,
-              img: undefined})
-            break;
-        case 137:
-          setContract({chainId: chainId, 
-            name:"Tether", 
-            symbol:"USDT", 
-            address: USDT_POLYGON_CONTRACT, 
-            decimals: 18,
-            totalSupply: "0",
-            img: undefined})
-          break;
-        default:
-          // code block
-      }
+      setContract({ chainId: account.chainId, 
+                    name:"Chikencoin", 
+                    symbol: "CHKN", 
+                    address: DEFAULT_TOKEN_CONTRACT,
+                    totalSupply: "0",
+                    decimals: 18,
+                    img: undefined})
     }
   }
 
-  balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)
-  // balanceOfRec = getERC20WagmiBalanceOfRec('0x858BDEe77B06F29A3113755F14Be4B23EE6D6e59', USDT_POLYGON_CONTRACT)
+  balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)
+  // balanceOfRec = getERC20WagmiBalanceOfRec('0x858BDEe77B06F29A3113755F14Be4B23EE6D6e59', DEFAULT_TOKEN_CONTRACT)
 
   return (
     <>
@@ -110,13 +105,13 @@ function App() {
           Error Status            : {error?.message} <br/>
           Account Status          : {status} <br/>
           Active Wallet Account   : {JSON.stringify(account.address, null, 2)} <br/>
-          Token Name              : {getERC20WagmiName(USDT_POLYGON_CONTRACT)} <br/>
-          Symbol                  : {getERC20WagmiSymbol(USDT_POLYGON_CONTRACT)} <br/>
-          Decimals                : {getERC20WagmiDecimals(USDT_POLYGON_CONTRACT)} <br/>
-          Total Supply            : {getERC20WagmiTotalSupply(USDT_POLYGON_CONTRACT)?.toString()} <br/>
-          Formatted Total Supply  : {getFormattedTotalSupply(USDT_POLYGON_CONTRACT)} <br/>
-          BalanceOf               : {getERC20WagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)} <br/>
-          Formatted BalanceOf     : {getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, USDT_POLYGON_CONTRACT)}
+          Token Name              : {getERC20WagmiName(DEFAULT_TOKEN_CONTRACT)} <br/>
+          Symbol                  : {getERC20WagmiSymbol(DEFAULT_TOKEN_CONTRACT)} <br/>
+          Decimals                : {getERC20WagmiDecimals(DEFAULT_TOKEN_CONTRACT)} <br/>
+          Total Supply            : {getERC20WagmiTotalSupply(DEFAULT_TOKEN_CONTRACT)?.toString()} <br/>
+          Formatted Total Supply  : {getFormattedTotalSupply(DEFAULT_TOKEN_CONTRACT)} <br/>
+          BalanceOf               : {getERC20WagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)} <br/>
+          Formatted BalanceOf     : {getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)}
         </div>
         {/* <div>{`nameRec.status = ${nameRec.status}`}</div>
         <div>{`totalSupplyRec.status = ${totalSupplyRec.status}`}</div>
