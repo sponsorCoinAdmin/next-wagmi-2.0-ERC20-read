@@ -1,12 +1,12 @@
 import { Address } from "viem"
 
 type TokenContract = {
-    chainId:number,
-    address: Address,
-    name:string | undefined,
-    symbol:string | undefined,
-    totalSupply:any
-    decimals:any,
+    chainId : number | undefined,
+    address : Address | undefined,
+    name :string | undefined,
+    symbol :string | undefined,
+    totalSupply : any
+    decimals : any,
     img: string | undefined;
   }
   

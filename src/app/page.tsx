@@ -36,8 +36,6 @@ function App() {
   const { disconnect } = useDisconnect()
   const [ contract, setContract ] = useState<TokenContract>()
 
-  let balanceOfRec;
- 
   useEffect(() => {
     if (account?.chainId !== undefined ) {
       setNetworkTestContract(account.chainId)
@@ -68,8 +66,24 @@ function App() {
     }
   }
 
-  balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)
-  // balanceOfRec = getERC20WagmiBalanceOfRec('0x858BDEe77B06F29A3113755F14Be4B23EE6D6e59', DEFAULT_TOKEN_CONTRACT)
+  let balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)
+
+  let ercContract = getErc20Contract(DEFAULT_TOKEN_CONTRACT)
+
+  let contractResponse:TokenContract =
+  {
+    address:DEFAULT_TOKEN_CONTRACT,
+    chainId: account.chainId,
+    name:getERC20WagmiName(undefined),
+    symbol:getERC20WagmiSymbol(DEFAULT_TOKEN_CONTRACT),
+    totalSupply:getERC20WagmiTotalSupply(DEFAULT_TOKEN_CONTRACT),
+    decimals:getERC20WagmiDecimals(DEFAULT_TOKEN_CONTRACT),
+    img:undefined
+  }
+
+  console.debug(`XXXX ercContract = ${JSON.stringify(ercContract, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
+  console.debug(`YYYY contractResponse = ${JSON.stringify(contractResponse, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
+  console.debug(`ZZZZ balanceOfRec = ${JSON.stringify(balanceOfRec, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
 
   return (
     <>
@@ -110,8 +124,8 @@ function App() {
           Decimals                : {getERC20WagmiDecimals(DEFAULT_TOKEN_CONTRACT)} <br/>
           Total Supply            : {getERC20WagmiTotalSupply(DEFAULT_TOKEN_CONTRACT)?.toString()} <br/>
           Formatted Total Supply  : {getFormattedTotalSupply(DEFAULT_TOKEN_CONTRACT)} <br/>
-          BalanceOf               : {getERC20WagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)} <br/>
-          Formatted BalanceOf     : {getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)}
+          BalanceOf               : {getERC20WagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT || "")} <br/>
+          Formatted BalanceOf     : {getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT || "")}
         </div>
         {/* <div>{`nameRec.status = ${nameRec.status}`}</div>
         <div>{`totalSupplyRec.status = ${totalSupplyRec.status}`}</div>
