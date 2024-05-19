@@ -22,8 +22,7 @@ import { TokenContract,
   getErc20Contract
 } from '../lib/wagmi/wagmiERC20Read'
 import Ecr20ReadFields from '@/components/Ecr20ReadFields'
-import Ecr20ReadWagmiRecords from '@/components/Ecr20ReadWagmiRecords'
-
+// import Ecr20ReadWagmiRecords from '@/components/Ecr20ReadWagmiRecords'
 
 // let ACTIVE_WALLET_ACCOUNT:Address|undefined;
 const USDT_POLYGON_CONTRACT:Address  = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'
@@ -68,8 +67,6 @@ function App() {
     }
   }
 
-  let balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)
-
   let ercContract = getErc20Contract(DEFAULT_TOKEN_CONTRACT)
 
   let contractResponse:TokenContract =
@@ -82,6 +79,12 @@ function App() {
     decimals:getERC20WagmiDecimals(DEFAULT_TOKEN_CONTRACT),
     img:undefined
   }
+
+  const nameRec = getERC20WagmiNameRec(DEFAULT_TOKEN_CONTRACT)
+  const symbolRec = getERC20WagmiSymbolRec(DEFAULT_TOKEN_CONTRACT)
+  const totalSupplyRec = getERC20WagmiTotalSupplyRec(DEFAULT_TOKEN_CONTRACT)
+  const balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)
+  const decimalRec = getERC20WagmiDecimalRec(DEFAULT_TOKEN_CONTRACT)
 
   console.debug(`XXXX ercContract = ${JSON.stringify(ercContract, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
   console.debug(`YYYY contractResponse = ${JSON.stringify(contractResponse, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
@@ -97,7 +100,6 @@ function App() {
           Wallet Account Addresses: {JSON.stringify(account.addresses, null, 2)} <br />
           chainId: {account.chainId}
         </div>
-
         {account.status === 'connected' && (
           <button type="button" onClick={() => disconnect()}>
             Disconnect
@@ -116,14 +118,19 @@ function App() {
             {connector.name}
           </button>
         ))}
+        {/* <Ecr20ReadFields account={account} error={error} status={status} ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} /> */}
         
-        Connection Status:        {account.status} <br />
-        Error Status            : {error?.message} <br/>
-        Account Status          : {status} <br/>
-        Active Wallet Account   : {JSON.stringify(account.address, null, 2)} <br/>
-
-        <Ecr20ReadFields ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} />
-        <Ecr20ReadWagmiRecords ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} />
+        <h2>Ecr20ReadWagmiRecords</h2>
+        <div>{`nameRec.status = ${nameRec.status}`}</div>
+        <div>{`totalSupplyRec.status = ${totalSupplyRec.status}`}</div>
+        <div>{nameRec.status === 'success' ? "Name : " + nameRec.data : null}</div>
+        <div>{symbolRec.status === 'success' ? "Symbol : " + symbolRec.data : null}</div>
+        <div>{totalSupplyRec.status === 'success' ? "Total Supply : " + totalSupplyRec.data : null}</div>
+        <div>{balanceOfRec?.status === 'success' ? "BalanceOf : " + balanceOfRec.data : null}</div>
+        <div>{decimalRec?.status === 'success' ? "Decimals : " + decimalRec?.data : null}</div>
+        <div>{balanceOfRec?.status === 'error' ? "BalanceOf ERROR : " + JSON.stringify(balanceOfRec.error, null, 2) : null}</div>
+        <div>{`Formatted Balance: ` + formatDecimals(balanceOfRec?.data, decimalRec?.data)}</div>
+        <div>{totalSupplyRec.status === 'error' ? "Total Supply ERROR : " + JSON.stringify(totalSupplyRec.error, null, 2) : null}</div>
       </div>
     </>
   )
