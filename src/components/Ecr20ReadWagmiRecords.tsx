@@ -1,5 +1,4 @@
 import { formatDecimals, getERC20WagmiBalanceOfRec, getERC20WagmiDecimalRec, getERC20WagmiNameRec, getERC20WagmiSymbolRec, getERC20WagmiTotalSupplyRec, getFormattedTotalSupply } from '@/lib/wagmi/wagmiERC20Read'
-import error from 'next/error'
 import React from 'react'
 import { Address } from 'viem'
 
@@ -23,14 +22,15 @@ const Ecr20ReadWagmiRecords = ({ ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT}:
 
   return (
     <>
-        <h2>Ecr20ReadWagmiRecords</h2>
-        <div>{name === null ? null : "Token Name : " + name }</div>
-        <div>{symbol === null ? null : "Symbol : " + symbol }</div>
-        <div>{decimals === null ? null : "Decimals : " + decimals }</div>
-        <div>{totalSupply === null ? null : "Total Supply : " + totalSupply }</div>
-        <div>{(totalSupply === null || decimals === null) ? null : "Formatted Total Supply : " + formatDecimals(totalSupplyRec?.data, decimalRec?.data) }</div>
-        <div>{balanceOf === null ? null : "BalanceOf : " + balanceOf }</div>
-        <div>{`Formatted Balance: ` + formatDecimals(balanceOfRec?.data, decimalRec?.data)}</div>
+      <hr className="border-top: 3px dashed #bbb"/>
+      <h2>Ecr20ReadWagmiRecords</h2>
+      <div>{name === null ? null : "Token Name : " + name }</div>
+      <div>{symbol === null ? null : "Symbol : " + symbol }</div>
+      <div>{decimals === null ? null : "Decimals : " + decimals }</div>
+      <div>{totalSupply === null ? null : "Total Supply : " + totalSupply }</div>
+      <div>{(totalSupply === null || decimals === null) ? null : "Formatted Total Supply : " + formatDecimals(totalSupplyRec?.data, decimalRec?.data) }</div>
+      <div>{balanceOf === null ? null : "BalanceOf : " + balanceOf }</div>
+      <div>{`Formatted Balance: ` + formatDecimals(balanceOfRec?.data, decimalRec?.data)}</div>
     </>
   )
 }

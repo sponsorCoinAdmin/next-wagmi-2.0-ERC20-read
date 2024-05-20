@@ -6,23 +6,15 @@ import { Address } from 'viem'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { TokenContract,
   getERC20WagmiBalanceOfRec,
-  getERC20WagmiTotalSupplyRec,
-  getERC20WagmiNameRec,
-  getERC20WagmiSymbolRec,
-  getERC20WagmiDecimalRec,
-  getERC20WagmiRecords,
-  getERC20WagmiBalanceOf, 
   getERC20WagmiDecimals,
   getERC20WagmiName, 
   getERC20WagmiSymbol,
   getERC20WagmiTotalSupply,
-  formatDecimals,
-  getFormattedTotalSupply,
-  getFormattedBalanceOf,
   getErc20Contract
 } from '../lib/wagmi/wagmiERC20Read'
 import Ecr20ReadFields from '@/components/Ecr20ReadFields'
 import Ecr20ReadWagmiRecords from '@/components/Ecr20ReadWagmiRecords'
+import WagmiConnect from '@/components/WagmiConnect'
 
 
 // let ACTIVE_WALLET_ACCOUNT:Address|undefined;
@@ -69,7 +61,6 @@ function App() {
   }
 
   let balanceOfRec = getERC20WagmiBalanceOfRec(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT)
-
   let ercContract = getErc20Contract(DEFAULT_TOKEN_CONTRACT)
 
   let contractResponse:TokenContract =
@@ -90,41 +81,22 @@ function App() {
   return (
     <>
       <div>
-        <h2>Account</h2>
+        <h2>Provider Configuration Status</h2>
         <div>
           Blockchain Provider = {BLOCKCHAIN_PROVIDER} <br />
           TokenContract Data: {JSON.stringify(contract, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2)} <br />
-          Wallet Account Addresses: {JSON.stringify(account.addresses, null, 2)} <br />
-          chainId: {account.chainId}
         </div>
-
-        {account.status === 'connected' && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
       </div>
 
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        
-        Connection Status:        {account.status} <br />
-        Error Status            : {error?.message} <br/>
-        Account Status          : {status} <br/>
-        Active Wallet Account   : {JSON.stringify(account.address, null, 2)} <br/>
+      <WagmiConnect 
+        account={account}
+        connect={connect}
+        connectors={connectors}
+        disconnect={disconnect}
+        error={error} />
 
-        <Ecr20ReadFields ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} />
-        <Ecr20ReadWagmiRecords ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} />
-      </div>
+      <Ecr20ReadFields ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} />
+      <Ecr20ReadWagmiRecords ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} DEFAULT_TOKEN_CONTRACT={DEFAULT_TOKEN_CONTRACT} />
     </>
   )
 }

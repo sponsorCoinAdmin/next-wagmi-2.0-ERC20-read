@@ -26,14 +26,15 @@ const Ecr20ReadFields = ({ ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT}: Props
   let formattedBalanceOf   = getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, DEFAULT_TOKEN_CONTRACT || "")
   return (
     <>
-        <h2>Ecr20ReadFields</h2>
-        Token Name              : {name} <br/>
-        Symbol                  : {symbol} <br/>
-        Decimals                : {decimals} <br/>
-        Total Supply            : {totalSupply} <br/>
-        Formatted Total Supply  : {formattedTotalSupply} <br/>
-        BalanceOf               : {balanceOf} <br/>
-        Formatted BalanceOf     : {formattedBalanceOf}
+      <hr className="border-top: 3px dashed #bbb"/>
+      <h2>Ecr20ReadFields</h2>
+      Token Name              : {name} <br/>
+      Symbol                  : {symbol} <br/>
+      Decimals                : {decimals} <br/>
+      Total Supply            : {totalSupply} <br/>
+      Formatted Total Supply  : {formattedTotalSupply} <br/>
+      BalanceOf               : {balanceOf} <br/>
+      Formatted BalanceOf     : {formattedBalanceOf}
     </>
   )
 }
