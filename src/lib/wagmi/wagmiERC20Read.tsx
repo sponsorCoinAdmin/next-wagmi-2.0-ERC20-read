@@ -8,7 +8,7 @@ import { erc20Abi } from 'viem'
 import { TokenContract, ContractRecs } from '../structure/types'
 
 const getERC20WagmiBalanceOfRec = (walletAddress: Address | string | undefined, contractAddress: Address | string | undefined) => {
-  console.debug(`getERC20WagmiBalanceOfRec:walletAddress = ${walletAddress}, contractAddress = ${contractAddress}`)
+  // console.debug(`getERC20WagmiBalanceOfRec:walletAddress = ${walletAddress}, contractAddress = ${contractAddress}`)
   let wagmiBalanceOfRec;
   if (contractAddress !== undefined && walletAddress !== undefined) {
     wagmiBalanceOfRec = useReadContract({
@@ -19,6 +19,7 @@ const getERC20WagmiBalanceOfRec = (walletAddress: Address | string | undefined, 
       config, 
     })
   }
+  console.debug(`balanceOfRec = ${JSON.stringify(wagmiBalanceOfRec, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
   return wagmiBalanceOfRec;
 }
 
