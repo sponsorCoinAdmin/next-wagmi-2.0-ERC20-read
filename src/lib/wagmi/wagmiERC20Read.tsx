@@ -63,6 +63,7 @@ const getERC20WagmiTotalSupplyRec = (contractAddress:Address | undefined) => {
     functionName: 'totalSupply',
     config, 
   })
+  console.debug("QQQQQ :\n"+JSON.stringify(wagmiTotalSupplyRec, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2))
   return wagmiTotalSupplyRec;
 }
 
@@ -104,8 +105,8 @@ const getErc20Contract = (contractAddress:Address | undefined) => {
     chainId: useChainId(),
     name:getERC20WagmiName(contractAddress),
     symbol:getERC20WagmiSymbol(contractAddress),
-    totalSupply:getERC20WagmiTotalSupply(contractAddress),
     decimals:getERC20WagmiDecimals(contractAddress),
+    totalSupply:getERC20WagmiTotalSupply(contractAddress),
     img:undefined
   }
   return contractResponse

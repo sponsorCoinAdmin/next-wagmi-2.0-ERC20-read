@@ -20,7 +20,7 @@ const ReadWagmiEcr20ContractFields = ({ TOKEN_CONTRACT}: Props) => {
       Token Name   : {name} <br/>
       Symbol       : {symbol} <br/>
       Decimals     : {decimals} <br/>
-      Total Supply : {totalSupply}
+      Total Supply : {totalSupply.toString()}
     </>
   )
 }

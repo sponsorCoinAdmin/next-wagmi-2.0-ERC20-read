@@ -11,6 +11,10 @@ import ProviderConfigurationStatus from '@/components/test/ProviderConfiguration
 import ReadWagmiEcr20Records from '@/components/test/ReadWagmiEcr20Records'
 import ReadWagmiEcr20ContractFields from '@/components/test/ReadWagmiEcr20ContractFields'
 import ReadWagmiEcr20BalanceOf from '@/components/test/ReadWagmiEcr20BalanceOf'
+import ReadWagmiEcr20ContractName from '@/components/test/ReadWagmiEcr20ContractName'
+import ReadWagmiEcr20ContractSymbol from '@/components/test/ReadWagmiEcr20ContractSymbol'
+import ReadWagmiEcr20ContractDecimals from '@/components/test/ReadWagmiEcr20ContractDecimals'
+import ReadWagmiEcr20ContractTotalSupply from '@/components/test/ReadWagmiEcr20ContractTotalSupply'
 
 // let ACTIVE_WALLET_ACCOUNT:Address|undefined;
 const USDT_POLYGON_CONTRACT:Address  = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'
@@ -38,9 +42,9 @@ function App() {
       setActiveWalletAccount(account.address)
   }, [account.address]);
 
-  let ercContract = getErc20Contract(TOKEN_CONTRACT)
+  // let ercContract = getErc20Contract(TOKEN_CONTRACT)
 
-  console.debug(`XXXX ercContract = ${JSON.stringify(ercContract, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
+  // console.debug(`XXXX ercContract = ${JSON.stringify(ercContract, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
 
   return (
     <>
@@ -51,6 +55,10 @@ function App() {
       <ReadWagmiEcr20Records TOKEN_CONTRACT={TOKEN_CONTRACT} />
       <ReadWagmiEcr20ContractFields  TOKEN_CONTRACT={TOKEN_CONTRACT} />
       <ReadWagmiEcr20BalanceOf  ACTIVE_WALLET_ACCOUNT={ACTIVE_WALLET_ACCOUNT} TOKEN_CONTRACT={TOKEN_CONTRACT} />
+      <ReadWagmiEcr20ContractName  TOKEN_CONTRACT={TOKEN_CONTRACT} />
+      <ReadWagmiEcr20ContractSymbol  TOKEN_CONTRACT={TOKEN_CONTRACT} />
+      <ReadWagmiEcr20ContractDecimals  TOKEN_CONTRACT={TOKEN_CONTRACT} />
+      <ReadWagmiEcr20ContractTotalSupply  TOKEN_CONTRACT={TOKEN_CONTRACT} />
     </>
   )
 }
