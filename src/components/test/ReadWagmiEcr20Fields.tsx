@@ -1,22 +1,22 @@
 import React from 'react'
 import { Address } from 'viem'
 import {
-    getERC20WagmiDecimals,
-    getERC20WagmiName,
-    getERC20WagmiSymbol,
-    getERC20WagmiTotalSupply,
-    getFormattedTotalSupply } from '@/lib/wagmi/wagmiERC20Read'
+    getERC20WagmiClientDecimals,
+    getERC20WagmiClientName,
+    getERC20WagmiClientSymbol,
+    getERC20WagmiClientTotalSupply,
+    getFormattedClientTotalSupply } from '@/lib/wagmi/erc20WagmiClientRead'
 
 type Props = {
   TOKEN_CONTRACT:Address
 }
 
 const ReadWagmiEcr20Fields = ({ TOKEN_CONTRACT}: Props) => {
-  let name                 = getERC20WagmiName(TOKEN_CONTRACT)
-  let symbol               = getERC20WagmiSymbol(TOKEN_CONTRACT)
-  let decimals             = getERC20WagmiDecimals(TOKEN_CONTRACT)
-  let totalSupply          = getERC20WagmiTotalSupply(TOKEN_CONTRACT)?.toString()
-  let formattedTotalSupply = getFormattedTotalSupply(TOKEN_CONTRACT)
+  let name                 = getERC20WagmiClientName(TOKEN_CONTRACT)
+  let symbol               = getERC20WagmiClientSymbol(TOKEN_CONTRACT)
+  let decimals             = getERC20WagmiClientDecimals(TOKEN_CONTRACT)
+  let totalSupply          = getERC20WagmiClientTotalSupply(TOKEN_CONTRACT)?.toString()
+  let formattedTotalSupply = getFormattedClientTotalSupply(TOKEN_CONTRACT)
   return (
     <>
       <hr className="border-top: 3px dashed #bbb"/>

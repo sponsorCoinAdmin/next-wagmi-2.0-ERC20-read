@@ -2,20 +2,20 @@ import React from 'react'
 import { Address } from 'viem'
 import {
   formatDecimals,
-  getERC20WagmiDecimalRec,
-  getERC20WagmiNameRec,
-  getERC20WagmiSymbolRec,
-  getERC20WagmiTotalSupplyRec } from '@/lib/wagmi/wagmiERC20Read'
+  getERC20WagmiClientDecimalRec,
+  getERC20WagmiClientNameRec,
+  getERC20WagmiClientSymbolRec,
+  getERC20WagmiClientTotalSupplyRec } from '@/lib/wagmi/erc20WagmiClientRead'
 
 type Props = {
   TOKEN_CONTRACT:Address
 }
 
 const ReadWagmiEcr20RecordFields = ( { TOKEN_CONTRACT }: Props) => {
-  const nameRec = getERC20WagmiNameRec(TOKEN_CONTRACT)
-  const symbolRec = getERC20WagmiSymbolRec(TOKEN_CONTRACT)
-  const decimalRec = getERC20WagmiDecimalRec(TOKEN_CONTRACT)
-  const totalSupplyRec = getERC20WagmiTotalSupplyRec(TOKEN_CONTRACT)
+  const nameRec = getERC20WagmiClientNameRec(TOKEN_CONTRACT)
+  const symbolRec = getERC20WagmiClientSymbolRec(TOKEN_CONTRACT)
+  const decimalRec = getERC20WagmiClientDecimalRec(TOKEN_CONTRACT)
+  const totalSupplyRec = getERC20WagmiClientTotalSupplyRec(TOKEN_CONTRACT)
 
   let name = nameRec.status === 'success' ? "Token Name : " + nameRec.data : null
   let symbol = symbolRec.status === 'success' ? "Symbol : " + symbolRec.data : null

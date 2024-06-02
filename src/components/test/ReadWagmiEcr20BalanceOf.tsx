@@ -1,6 +1,6 @@
 import React from 'react'
 import { Address } from 'viem'
-import { getERC20WagmiBalanceOf, getFormattedBalanceOf } from '@/lib/wagmi/wagmiERC20Read'
+import { getERC20WagmiClientBalanceOf, getFormattedClientBalanceOf } from '@/lib/wagmi/erc20WagmiClientRead'
 
 type Props = {
   ACTIVE_WALLET_ACCOUNT:Address, 
@@ -8,8 +8,8 @@ type Props = {
 }
 
 const ReadWagmiEcr20BalanceOf = ({ ACTIVE_WALLET_ACCOUNT, TOKEN_CONTRACT}: Props) => {
-  let balanceOf            = getERC20WagmiBalanceOf(ACTIVE_WALLET_ACCOUNT, TOKEN_CONTRACT || "")
-  let formattedBalanceOf   = getFormattedBalanceOf(ACTIVE_WALLET_ACCOUNT, TOKEN_CONTRACT || "")
+  let balanceOf            = getERC20WagmiClientBalanceOf(ACTIVE_WALLET_ACCOUNT, TOKEN_CONTRACT || "")
+  let formattedBalanceOf   = getFormattedClientBalanceOf(ACTIVE_WALLET_ACCOUNT, TOKEN_CONTRACT || "")
   return (
     <>
       <hr className="border-top: 3px dashed #bbb"/>

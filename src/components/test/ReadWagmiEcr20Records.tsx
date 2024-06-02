@@ -1,13 +1,13 @@
 import React from 'react'
 import { Address } from 'viem'
-import { getERC20WagmiRecords, formatDecimals } from '@/lib/wagmi/wagmiERC20Read'
+import { getERC20WagmiClientRecords, formatDecimals } from '@/lib/wagmi/erc20WagmiClientRead'
 
 type Props = {
   TOKEN_CONTRACT:Address
 }
 
 const ReadWagmiEcr20Records = ({ TOKEN_CONTRACT}: Props) => {
-  const wagmiRecords = getERC20WagmiRecords(TOKEN_CONTRACT)
+  const wagmiRecords = getERC20WagmiClientRecords(TOKEN_CONTRACT)
   const nameRec = wagmiRecords.nameRec
   const symbolRec = wagmiRecords.symbolRec
   const decimalRec = wagmiRecords.decimalRec

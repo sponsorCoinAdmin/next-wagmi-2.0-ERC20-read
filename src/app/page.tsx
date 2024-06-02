@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { Address } from 'viem'
 import { useAccount } from 'wagmi'
-import { getErc20Contract } from '../lib/wagmi/wagmiERC20Read'
 import ReadWagmiEcr20Fields from '@/components/test/ReadWagmiEcr20Fields'
 import ReadWagmiEcr20RecordFields from '@/components/test/ReadWagmiEcr20RecordFields'
 import WagmiConnect from '@/components/test/WagmiConnect'
@@ -42,7 +41,7 @@ function App() {
       setActiveWalletAccount(account.address)
   }, [account.address]);
 
-  // let ercContract = getErc20Contract(TOKEN_CONTRACT)
+  // let ercContract = getErc20ClientContract(TOKEN_CONTRACT)
 
   // console.debug(`XXXX ercContract = ${JSON.stringify(ercContract, (_, v) => typeof v === 'bigint' ? v.toString() : v,2)}`)
 

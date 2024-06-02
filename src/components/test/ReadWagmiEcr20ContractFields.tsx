@@ -1,6 +1,6 @@
 import React from 'react'
 import { Address } from 'viem'
-import { getErc20Contract  } from '@/lib/wagmi/wagmiERC20Read'
+import { getErc20ClientContract  } from '@/lib/wagmi/erc20WagmiClientRead'
 
 type Props = {
   TOKEN_CONTRACT:Address
@@ -8,7 +8,7 @@ type Props = {
 
 const ReadWagmiEcr20ContractFields = ({ TOKEN_CONTRACT}: Props) => {
 
-  let contract    = getErc20Contract(TOKEN_CONTRACT)
+  let contract    = getErc20ClientContract(TOKEN_CONTRACT)
   let name        = contract.name
   let symbol      = contract.symbol
   let decimals    = contract.decimals
@@ -20,7 +20,7 @@ const ReadWagmiEcr20ContractFields = ({ TOKEN_CONTRACT}: Props) => {
       Token Name   : {name} <br/>
       Symbol       : {symbol} <br/>
       Decimals     : {decimals} <br/>
-      Total Supply : {totalSupply.toString()}
+      Total Supply : {totalSupply?.toString()}
     </>
   )
 }
