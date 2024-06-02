@@ -1,8 +1,11 @@
 {
     "cSpell.words": [
         "Avenir",
+        "bufferutil",
         "Chikencoin",
         "CHKN",
+        "lokijs",
+        "pino",
         "sepolia",
         "tanstack",
         "viem",
